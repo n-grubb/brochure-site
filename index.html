@@ -20,7 +20,7 @@
 
     <style>
       canvas#waves {
-        width: 100%;
+        width: 120%;
         max-height: 400px;
         bottom: 0;
     	position: absolute;
@@ -81,8 +81,8 @@
 	    var values = {
 		    friction: 4,
 		    timeStep: 0.01,
-		    amount: 24,
-		    mass: 2,
+		    amount: 26,
+		    mass: 2.5,
 		    count: 0,
 		};
 		values.invMass = 1 / values.mass;
@@ -140,7 +140,7 @@
 		    size = view.bounds.size * [2, 1];
 		    path = createPath(0.1);
 
-		    startWave( path );
+		    startWave();
 		}
 
 		/*
@@ -190,29 +190,33 @@
 		    }
 		}
 
-		function startWave( path ) {
+		function startWave() {
 
-			/*
-			var location = path.getNearestLocation(path.point);
-			var segment = location.segment;
-			*/
+			if (path) {
 
-			var segment = path.segments[4]
-		    var point = segment.point;
+				console.log( 'running startWave' );
 
-	        var y = 250;
-	        point.y += (y - point.y) / 6;
+				var segment = path.segments[6]
+			    var point = segment.point;
 
-	        var previous = segment.previous && segment.previous.point;
-	        var next = segment.next && segment.next.point;
-	        if (previous && !previous.fixed)
-	            previous.y += (y - previous.y) / 24;
-	        if (next && !next.fixed)
-	            next.y += (y - next.y) / 24;
-		    
+		        var y = 250;
+
+		        point.y += (y - point.y) / 6;
+		        var previous = segment.previous && segment.previous.point;
+		        var next = segment.next && segment.next.point;
+		        if (previous && !previous.fixed)
+		            previous.y += (y - previous.y) / 24;
+		        if (next && !next.fixed)
+		            next.y += (y - next.y) / 24;
+
+		    }
+		    else {
+		    	console.log('no path');
+		    }
 
 		}
-		
+
+		setInterval( startWave, 30000 );
 
     </script>
 
